@@ -12,7 +12,7 @@ It can only prune the first Conv's filters in every BasicBlock or First two Conv
 ## To prune, I have change the function to create ResNet model
 I define a cfg which is a 2D integer list, and I use this cfg to create pruned model.
   - row index means the block idx in ResNet
-  - collum index means the Conv layer idx in the block
+  - collum index means the Conv layer idx in the block (the first Conv, BasicBlock or Bottleneck)
   - each element value is the number of Conv's output chananel (or we can say the Conv's filter number)
 
 
