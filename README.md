@@ -34,7 +34,7 @@ python train.py --model-name [eg. ResNet18] \
 | param | description |  
 | :---: | :-----:| 
 |    sr | the switch to open sparse-regularization |  
-|     s | sparsity factor(in paper, it is lambda) |  
+|     s | sparsity factor(in [paper](http://openaccess.thecvf.com/content_iccv_2017/html/Liu_Learning_Efficient_Convolutional_ICCV_2017_paper.html), it is lambda) |  
 | prune | sparse mode, used to control which BN layer's gamma need to be sparse |  
 
 ### prune
