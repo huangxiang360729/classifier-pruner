@@ -11,17 +11,26 @@ Using Network-Slimming to prune classifier.
 - tqdm v4.46.1
 - torchsummary v1.5.1
 
-## Now, it only support prune ResNet(18, 36, 50, 101, 152) on CIFAR10
+## Limitation
+Now, it only support prune ResNet(18, 36, 50, 101, 152) on CIFAR10.
+
 Of course, it is easy to extend this code to other classification datasets.  
 
-It can only prune the first Conv's filters in every BasicBlock or First two Conv's filters in every Bottleneck. Next time, I will take all Conv layer in ResNet into account when pruning.
+It can only prune the first Conv's filters in every BasicBlock or First two Conv's filters in every Bottleneck. 
 
-## To prune, I have change the function to create ResNet model
-I define a cfg which is a 2D integer list, and I use this cfg to create pruned model.
+Next time, I will take all Conv layer in ResNet into account when pruning.
+
+## cfg file
+To prune Convenience, I have change the function to create ResNet model.
+
+I define a cfg and use it to create pruned model.
+
+cfg  is a 2D integer list:
   - row index means the block idx in ResNet
   - collum index means the Conv layer idx in the block (the first Conv, BasicBlock or Bottleneck)
   - each element value is the number of Conv's output chananel (or we can say the Conv's filter number)
 
+When prune is complete, I generate a cfg file to save the model's architecture by using 'torch.save()' function.
 
 ## Usage
 ### baseline
