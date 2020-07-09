@@ -75,3 +75,9 @@ python prune.py --model-name [eg. ResNet18] \
   --epochs [epochs] \
   --from-scratch
 ```
+
+### run
+I also write a shell script to run baseline -> sp -> prune -> finetune
+```shell
+sh run.sh
+```
