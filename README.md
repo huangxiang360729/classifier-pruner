@@ -6,6 +6,8 @@ Using Network-Slimming to prune classifier.
 ## Now, it only support prune ResNet(18 36 50 101 152) on CIFAR10
 Of course, it is easy to extend this code to other classification datasets.  
 
+It can only prune the first Conv's filters in every BasicBlock or First two Conv's filters in every Bottleneck. Next time, I will prune all Conv's filter in ResNet.
+
 ## Usage
 ### baseline
 training from scratch to get the baseline of Acc, this step will get the baseline's weights.
