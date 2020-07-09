@@ -9,8 +9,8 @@ Of course, it is easy to extend this code to other classification datasets.
 
 It can only prune the first Conv's filters in every BasicBlock or First two Conv's filters in every Bottleneck. Next time, I will take all Conv layer in ResNet into account when pruning.
 
-## To prune, I have change the function the create ResNet model
-I define a cfg which is a 2D integer list
+## To prune, I have change the function to create ResNet model
+I define a cfg which is a 2D integer list, and I use this cfg to create pruned model
   - row index means the block idx in ResNet
   - collum index means the Conv layer idx in the block
   - each element value is the number of Conv's output chananel (or we can say the Conv's filter number)
