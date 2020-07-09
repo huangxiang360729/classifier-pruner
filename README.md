@@ -3,6 +3,13 @@ Using Network-Slimming to prune classifier.
 
 [Learning Efficient Convolutional Networks Through Network Slimming](http://openaccess.thecvf.com/content_iccv_2017/html/Liu_Learning_Efficient_Convolutional_ICCV_2017_paper.html) (ICCV 2017)
 
+## Dependencies
+- pytorch v1.5.1
+- torchvision v0.6.1
+- terminaltables v3.1.0
+- tensorboardX v2.0  
+- tqdm v4.46.1
+- torchsummary v1.5.1
 
 ## Now, it only support prune ResNet(18, 36, 50, 101, 152) on CIFAR10
 Of course, it is easy to extend this code to other classification datasets.  
