@@ -3,12 +3,12 @@
 device=0
 prefix=exp_ResNet152
 model=ResNet152
-epochs=10
+epochs=100
 batch_size=64
 
 
 ############################################################
-mkdir -p ${model}/baseline
+mkdir -p ${prefix}/baseline
 
 echo "################ start baseline"
 CUDA_VISIBLE_DEVICES=${device} python train.py \
