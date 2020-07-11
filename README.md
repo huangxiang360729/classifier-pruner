@@ -26,10 +26,10 @@ Of course, it is easy to extend this code to other classification datasets.
     > There is no dependency between VGG's Conv, so all Convs can be pruned.  
 
 - ResNet
-  + res_prune.py(prune = 0): 
+  + resnet_prune.py(prune = 0): 
     > It can only prune the first Conv's filters in every BasicBlock or First two Conv's filters in every Bottleneck.   
     > When dealing with Sparse-regularization（sp）, prune shoud set to 0， that is "--prune 0"  
-  + res_slim_prune.py(prune = 1):   
+  + resnet_slim_prune.py(prune = 1):   
     > It can prune all Conv's filters.  
     > When multiple Convs depend on each other (these Convs need to have the same number of filters), we can only prune the filters that each Conv thinks can be prune. That is, when seeking the pruning mask, you need to find the union of '1' (or we can also say the intersection of '0'), where '1' indicates reservation and '0' indicates pruning.  
     > When dealing with Sparse-regularization（sp）, prune shoud set to 1， that is "--prune 1"  
@@ -80,7 +80,7 @@ python train.py --model-name [eg. ResNet18] \
 ### prune
 prune the filters with small corresponding gamma.
 ```shell
-python prune.py --model-name [eg. ResNet18] \
+python resnet_prune.py --model-name [eg. ResNet18] \
   -ckpt [the file path of sp's checkpoint] \
   -saved-dir [the directory to save pruned model's cfg and weights] \
   -percent [the prune ratio]
@@ -92,7 +92,7 @@ percent = (the filters pruned) / (the filters that can be pruned),  "the filters
 ### finetune 
 finetune pruned model to recover the Acc.
 ```shell
-python prune.py --model-name [eg. ResNet18] \
+python train.py --model-name [eg. ResNet18] \
   --cfg [the config file of pruned model] \
   -ckpt [the file path of pruned_model's weights] \
   -saved-dir [the directory to save finetune model's cfg and weights] \
@@ -104,7 +104,7 @@ python prune.py --model-name [eg. ResNet18] \
 ### from-scratch 
 train pruned model from scratch.
 ```shell
-python prune.py --model-name [eg. ResNet18] \
+python train.py --model-name [eg. ResNet18] \
   --cfg [the config file of pruned model] \
   -ckpt [the file path of pruned_model's weights] \
   -saved-dir [the directory to save finetune model's cfg and weights]  \
