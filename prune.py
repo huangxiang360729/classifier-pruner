@@ -123,7 +123,6 @@ if __name__ == '__main__':
         if i in prune_idx:
             mask = weight_copy.abs().ge(thre)
             
-            tmp = mask.float().to(device)
             m['bn'].weight.data.mul_(mask)
             m['bn'].bias.data.mul_(mask)
             
