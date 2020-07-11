@@ -7,7 +7,7 @@ epochs=100
 batch_size=128
 s=0.001
 prune_mode=resnet_prune.py
-prune=1
+prune=0
 baseline_lr=0.1
 sp_lr=0.01
 
