@@ -6,20 +6,19 @@ def get_sr_flag(epoch, sr):
 
 class BNOptimizer():
     @staticmethod
-    def updateBN(sr_flag, module_list, s, prune_idx, epoch):
+    def updateBN(sr_flag, bn_list, s, epoch):
         if sr_flag:
-            for idx in prune_idx:
-                bn = module_list[idx]['bn']
+            for idx in range(len(bn_list)):
+                bn = bn_list[idx]
                 bn.weight.grad.data.add_(s * torch.sign(bn.weight.data)) # L1
 
-                
-def gather_bn_weights(module_list, prune_idx):
-    size_list = [module_list[idx]['bn'].weight.data.shape[0] for idx in prune_idx]
+def gather_bn_weights(bn_list):
+    size_list = [bn_list[idx].weight.data.shape[0] for idx in range(len(bn_list))]
 
     bn_weights = torch.zeros(sum(size_list))
     index = 0
-    for idx, size in zip(prune_idx, size_list):
-        bn_weights[index:(index + size)] = module_list[idx]['bn'].weight.data.abs().clone()
+    for idx, size in enumerate(size_list):
+        bn_weights[index:(index + size)] = bn_list[idx].weight.data.abs().clone()
         index += size
 
     return bn_weights

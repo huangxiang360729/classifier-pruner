@@ -81,18 +81,37 @@ def train():
     optimizer = optim.SGD(model.parameters(), lr=opt.lr, momentum=0.9, weight_decay=5e-4)
     
     #+++++++++++++++++++++++++ insert +++++++++++++++++++++++++#
-    if opt.prune == 0:
-        module_list, _ = model.get_module_list()
-        resnet_cfg = ResNetCFG()
-        prune_idx = resnet_cfg.get_prune_idx(model)
+    if 'VGG' in model_name:
+        bn_list = []
+        for m in model.modules():
+            if isinstance(m,nn.BatchNorm2d):
+                bn_list.append(m)
         if opt.sr:
-            print('normal sparse training!!!')
+            print('sparse training!!!')  
+    else:
+        if opt.prune == 0:
+            module_list, _ = model.get_module_list()
+            resnet_cfg = ResNetCFG()
+            prune_idx = resnet_cfg.get_prune_idx(model)
+
+            bn_list = []
+            for idx,m in enumerate(module_list):
+                if idx in prune_idx:
+                    bn_list.append(m['bn'])
+            if opt.sr:
+                print('normal sparse training!!!')
+        elif opt.prune == 1:
+            bn_list = []
+            for m in model.modules():
+                if isinstance(m,nn.BatchNorm2d):
+                    bn_list.append(m)
+            if opt.sr:
+                print('shortcut sparse training!!!')                
     
     if tb_writer:
-        for idx in prune_idx:
-            bn_weights = gather_bn_weights(module_list, [idx])
-            if tb_writer:
-                tb_writer.add_histogram('before_train_perlayer_bn_weights/hist', bn_weights.numpy(), idx, bins='doane')
+        for idx in range(len(bn_list)):
+            bn_weights = bn_list[idx].weight.data.abs().clone().cpu()
+            tb_writer.add_histogram('before_train_perlayer_bn_weights/hist', bn_weights.numpy(), idx, bins='doane')
     #+++++++++++++++++++++++++ insert end++++++++++++++++++++++#
     
     def adjust_learning_rate(optimizer, gamma, epoch):
@@ -136,7 +155,7 @@ def train():
             loss.backward()
             
             #+++++++++++++++++++++++++ insert +++++++++++++++++++++++++#
-            BNOptimizer.updateBN(sr_flag, module_list, opt.s, prune_idx, epoch)
+            BNOptimizer.updateBN(sr_flag, bn_list, opt.s, epoch)
             #+++++++++++++++++++++++++ insert end++++++++++++++++++++++#
             
             optimizer.step()
@@ -185,7 +204,7 @@ def train():
                 tb_writer.add_scalar(tag, x, epoch)
                 
             #+++++++++++++++++++++++++ insert +++++++++++++++++++++++++#
-            bn_weights = gather_bn_weights(module_list, prune_idx)
+            bn_weights = gather_bn_weights(bn_list).cpu()
             tb_writer.add_histogram('bn_weights/hist', bn_weights.numpy(), epoch, bins='doane')
             #+++++++++++++++++++++++++ insert end++++++++++++++++++++++#
         
@@ -194,8 +213,8 @@ def train():
     
     #+++++++++++++++++++++++++ insert +++++++++++++++++++++++++#
     if tb_writer:
-        for idx in prune_idx:
-            bn_weights = gather_bn_weights(module_list, [idx])
+        for idx in range(len(bn_list)):
+            bn_weights = bn_list[idx].weight.data.abs().clone().cpu()
             tb_writer.add_histogram('after_train_perlayer_bn_weights/hist', bn_weights.numpy(), idx, bins='doane')
     #+++++++++++++++++++++++++ insert end++++++++++++++++++++++#
 
