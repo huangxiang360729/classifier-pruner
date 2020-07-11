@@ -75,7 +75,7 @@ python train.py --model-name [eg. ResNet18] \
 | :---: | :-----:| 
 |    sr | the switch to open sparse-regularization |  
 |     s | sparsity factor(in [paper](http://openaccess.thecvf.com/content_iccv_2017/html/Liu_Learning_Efficient_Convolutional_ICCV_2017_paper.html), it is lambda) |  
-| prune | sparse mode, used to control which BN layer's gamma need to be sparse and only works under ResNet |  
+| prune | sparse mode, used to control which BN layer's gamma need to be sparse and only works under ResNet(VGG does not need to set this parameter) |  
 
 ### prune
 prune the filters with small corresponding gamma.
@@ -117,5 +117,5 @@ python train.py --model-name [eg. ResNet18] \
 ### run
 I also write a shell script to run baseline -> sp -> prune -> finetune
 ```shell
-sh run.sh
+sh run_resnet18_prune.sh
 ```
