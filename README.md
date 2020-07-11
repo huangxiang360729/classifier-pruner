@@ -12,18 +12,34 @@ Using Network-Slimming to prune classifier.
 - torchsummary v1.5.1
 
 ## Limitation
-Now, it only support prune ResNet(18, 36, 50, 101, 152) on CIFAR10.
+### Models that support pruning：
+- ResNet(18, 36, 50, 101, 152) 
+- VGG(11, 13, 16, 19)
 
+### Supported datasets:
+- CIFAR10  
 Of course, it is easy to extend this code to other classification datasets.  
 
-It can only prune the first Conv's filters in every BasicBlock or First two Conv's filters in every Bottleneck. 
+### Prune mode:
+- VGG
+  + vgg_prune.py
+    > There is no dependency between VGG's Conv, so all Convs can be pruned.  
 
-Next time, I will take all Conv layer in ResNet into account when pruning.
+- ResNet
+  + res_prune.py(prune = 0): 
+    > It can only prune the first Conv's filters in every BasicBlock or First two Conv's filters in every Bottleneck.   
+    > When dealing with Sparse-regularization（sp）, prune shoud set to 0， that is "--prune 0"  
+  + res_slim_prune.py(prune = 1):   
+    > It can prune all Conv's filters.  
+    > When multiple Convs depend on each other (these Convs need to have the same number of filters), we can only prune the filters that each Conv thinks can be prune. That is, when seeking the pruning mask, you need to find the union of '1' (or we can also say the intersection of '0'), where '1' indicates reservation and '0' indicates pruning.  
+    > When dealing with Sparse-regularization（sp）, prune shoud set to 1， that is "--prune 1"  
 
-## cfg file
-To prune Convenience, I have change the function to create ResNet model.
+Next time, I will take more models into account when pruning.
 
-I define a cfg and use it to create pruned model.
+## ResNet's cfg file
+To prune ResNet Convenience, I have change the function to create ResNet model.
+
+I define a cfg and use it to create ResNet pruned model.
 
 cfg  is a 2D integer list:
   - row index means the block idx in ResNet
