@@ -100,7 +100,7 @@ finetune pruned model to recover the Acc.
 python train.py --model-name [eg. ResNet18] \
   --cfg [the config file of pruned model] \
   -ckpt [the file path of pruned_model's weights] \
-  -saved-dir [the directory to save finetune model's cfg and weights] \
+  -ckpt-dir [the directory to save finetune model's cfg and weights] \
   -log [the directory to save tensorboard output] \
   --lr [learning rate] \
   --epochs [epochs]
@@ -112,7 +112,7 @@ train pruned model from scratch.
 python train.py --model-name [eg. ResNet18] \
   --cfg [the config file of pruned model] \
   -ckpt [the file path of pruned_model's weights] \
-  -saved-dir [the directory to save finetune model's cfg and weights]  \
+  -ckpt-dir [the directory to save finetune model's cfg and weights]  \
   -log [the directory to save tensorboard output] \
   --lr [learning rate] \
   --epochs [epochs] \
