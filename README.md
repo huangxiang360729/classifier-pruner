@@ -3,6 +3,11 @@ Using Network-Slimming to prune classifier.
 
 [Learning Efficient Convolutional Networks Through Network Slimming](http://openaccess.thecvf.com/content_iccv_2017/html/Liu_Learning_Efficient_Convolutional_ICCV_2017_paper.html) (ICCV 2017)
 
+# Git update log
+| timestamp | description | reference file |  
+| :---: | :-----:| :-----: |
+|2020-07-16| debug real_prune function in vgg_prune.py, add p_conv's bias parameters copy | vgg_prune.py | 
+
 ## Dependencies
 - pytorch v1.5.1
 - torchvision v0.6.1
