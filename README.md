@@ -6,7 +6,7 @@ Using Network-Slimming to prune classifier.
 # Git update log
 | timestamp | description |  related file |  
 | :---: | :-----:| :-----: |
-|2020-07-16| debug real_prune function in vgg_prune.py, add p_conv's bias parameters copy | vgg_prune.py | 
+|2020-07-16| debug vgg_prune.py, add p_conv's bias parameters copy | vgg_prune.py | 
 
 ## Dependencies
 - pytorch v1.5.1
