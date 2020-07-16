@@ -160,6 +160,8 @@ if __name__ == '__main__':
         # 对卷积层的参数赋值
         tmp = conv.weight.data[:,in_channel_idx,:,:]
         p_conv.weight.data.copy_(tmp[out_channel_idx,:,:,:])
+        if not (conv.bias is None):
+            p_conv.bias.data.copy_(conv.bias.data[out_channel_idx])
         
     # 全连接层的参数赋值
     collum_idx = [] # 上一个卷积层剩余的filter数目等于当前全连接层权重矩阵的列数
