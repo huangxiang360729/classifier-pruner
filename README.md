@@ -8,6 +8,7 @@ Using Network-Slimming to prune classifier.
 | :---: | :-----:| :-----: |
 |2020-07-16| debug vgg_prune.py, add p_conv's bias parameters copy | vgg_prune.py | 
 |2020-07-19| upload vgg_sensitity.ipynb (analyze each layer's sensitivity for prune) | vgg_sensitity.ipynb |
+|2020-07-19| upload vgg_l1-norm_ns_random.ipynb (analyze each layer's sensitivity for l1-norm algorithm, network slimming algorithm and random prune algorithm) | vgg_l1-norm_ns_random.ipynb |
 
 ## Dependencies
 - pytorch v1.5.1
